@@ -140,29 +140,31 @@ snakepart randomGoody();
 ``` 
 
 ***Spielgeschwindigkeit*** <br/>
-Die Delay-Funktion ist Taktgeber des Spiels, wird sie aufgerufen wird die angegebene Zeit gewartet. Die Wartezeit wird als Übergabeparameter in Millisekunden und als Ganzzahl angegeben. Zu Beginn soll die Wartezeit 500ms betragen.
+Damit die Schlange nach einer bestimmten Zeit in Millisekunden auf die nächste Position bewegt wird, muss die `wait()-Funktion` aufgerufen werden. Beim Aufruf wird die Wartezeit in Millisekunden als Ganzzahl Übergabeparameter übergeben. Die Funktion bewirkt, dass die angegebene Zeit gewartet wird und erst nach Ablauf der Wartezeit das Programm fortgeführt wird.
+Zu Beginn soll die Wartezeit 200ms betragen und mit jedem gefressenen Goody wird diese reduziert.
  ```c
  void wait(int Waiting_Time_ms);
  ``` 
 
 ***Wenn Goody aufgesammlt wird*** <br/>
-Überprüft ob Schlangenkopf sich auf Goody bewegt, wenn ja erhöht die Funktion die Schlangenlänge um 1, den Score um 10 Pkt. und eine neue zufällige Goody-Position wird erzeugt. Benötigt die nächste Position vom Schlangenkopf als Snakepart Datentyp. 
+Die 'eat()-Funktion' überprüft, ob der Schlangenkopf sich auf das Goody bewegt, wenn ja, erhöht die Funktion die Schlangenlänge um eins und den Score um 10 Punkte. Danach wird eine neue zufällige Goody-Position erzeugt. Die Funktion benötigt die nächste Position vom Schlangenkopf als 'snakepart' Datentyp.
 ```c
 void eat(snakepart next);
 ```
 
 ***Überprüfung des nächsten Schritts*** <br/>
-Überprüft ob die nächste Position möglich ist, also ob kein Hinderniss berührt wird. Als Übergabeparameter wird die nächste Position des Schlangenkopfts als Snakepart Datentyp benötigt.
+Ob die Schlange im nächsten Schritt ein Hindernis oder sich selbst berührt, wird durch die Funktion 'checkNextStep()' überprüft. Dazu wird die nächste Position des Schlangenkopfs der Funktion übergeben. Die Funktion vergleicht diese Position anschließend mit dem 'Snake[]'-Array und den Spielfeldbegrenzungen.
 ```c
  boolean checkNextStep(snakepart next); 
  
   //false : Hindernis wird berührt 
-  //true : Hindernis wird nicht berührt
-	
+  //true : Hindernis wird nicht berührt	
 ```
+Der Rückgabewert der Funktion liefert dann, ob ein Hindernis im nächsten Schritt berührt wird mit 'false' oder ob kein Hindernis berührt wird mit 'true'.
 
 ***Bewegung der Schlange*** <br/>
-Schiebt die Schlange auf die neue Position. Dazu wird die Position des Schlangenkopfs im Array um 1 Element weiter nach hinten geschoben. Die neue X- und Y-Position wird ind das 0.Element des Arrays, also den Schlangenkopf geschrieben. Als Übergabeparameter wird die nächste Position des Schlangenkopfts als Snakepart Datentyp benötigt.
+Damit die Schlange sich auf eine neue Position verschiebt, muss die Funktion `move()` aufgerufen werden. Die Funktion schiebt dabei die Positionen im `Snake[]`-Array um eine Position nach hinten. Das letzte Element bei `s_length-1` wird dabei nicht berücksichtigt, da dieses im nächsten Zug nicht mehr Teil der Schlange ist. Wird die Schlangenlänge `s_length` größer, so müssen immer mehr Elemente verschoben werden. Zuletzt, muss die neue X- und Y-Position des Schlangenkopfes in das 0. Element des `Snake[]`-Arrays geschrieben werden.
+Aus diesem Grund benötigt die Funktion als Übergabeparameter wird die nächste Position des Schlangenkopfts als `snakepart` Datentyp.
 ```c
 void move(snakepart next); 
 ``` 
@@ -170,7 +172,7 @@ void move(snakepart next);
 ***Spielablauf*** <br/>
 Regelt den kompletten Spielverlauf, siehe Struktogramm.
 ```c
-Snake_ErrorType game(); 
+void game(); 
 ``` 
 
 <img align="center" width="800" height="600" src="https://abload.de/img/struktogramm-spiel-snz0jum.png"> 

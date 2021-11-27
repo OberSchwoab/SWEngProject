@@ -84,7 +84,7 @@ Des Weiteren wird die Länge der Schlange in einer globalen Variable gespeichert
 ```c
      	int s_length = 1;  //Schlangenlänge
 ```      
-Zu Beginn des Spiels wird die Variable auf eins initialisiert und kann durch Aufsammeln von Goodys im Laufe des Spiels erhöht werden. Beim Einsammeln eines Goodys wird die Länge der Schlange durch die nachfolgend beschriebene 'eat()' Funktion erhöht.
+Zu Beginn des Spiels wird die Variable auf eins initialisiert und kann durch Aufsammeln von Goodys im Laufe des Spiels erhöht werden. Beim Einsammeln eines Goodys wird die Länge der Schlange durch die nachfolgend beschriebene `eat()` Funktion erhöht.
 
 Zudem benötigt das Spielfeld auch die Position eines Goodys, damit er von der Schlange gefressen werden. Das Goody ist wieder vom Type `snakepart` und enthält somit X- und Y-Koordinaten. Werden diese Koordinaten von dem Schlangenkopf erreicht, wird dieser von der Schlange gefressen. Folglich wird jetzt eine neue Goody Postion benötigt, die durch die Funktion `randomGoody()` generiert werden. 
 ```c 
@@ -120,8 +120,8 @@ Für den Rückgabewert der `checkNextStep()`-Funktion wird ein Datentyp true ode
 
 ***Initialisierung der wichtigesten Variablen*** <br/>
 
-Die 'init()'-Funktion initialisiert zu Beginn jedes Spiels die Variablen 'Score=0', alle Elementer des 'Snake'-Arrays mit NULL und setzt Startposition in 'Snake[0]'. Es wird das 'Goody' mit einer zufälligen Position gefüllt, der Startbildschirm ausgegeben und die Eingabeaufforderung für den Spielernamen ausgeführt. Danach die Initialisierung der Dateiausgabe und des Spielfelds. Schlussendlich dann noch das Spielfeld aktualisiert.
-Die 'init()'-Funktion wird somit vor jedem Spielstart ausgeführt, um die grundlegende Spielumgebung zu schaffen.
+Die `init()`-Funktion initialisiert zu Beginn jedes Spiels die Variablen `Score=0`, alle Elementer des `Snake`-Arrays mit NULL und setzt Startposition in `Snake[0]`. Es wird das `Goody` mit einer zufälligen Position gefüllt, der Startbildschirm ausgegeben und die Eingabeaufforderung für den Spielernamen ausgeführt. Danach die Initialisierung der Dateiausgabe und des Spielfelds. Schlussendlich dann noch das Spielfeld aktualisiert.
+Die `init()`-Funktion wird somit vor jedem Spielstart ausgeführt, um die grundlegende Spielumgebung zu schaffen.
 ```c
 void init(); 
 ``` 
@@ -147,20 +147,20 @@ Zu Beginn soll die Wartezeit 200ms betragen und mit jedem gefressenen Goody wird
  ``` 
 
 ***Wenn Goody aufgesammlt wird*** <br/>
-Die 'eat()-Funktion' überprüft, ob der Schlangenkopf sich auf das Goody bewegt, wenn ja, erhöht die Funktion die Schlangenlänge um eins und den Score um 10 Punkte. Danach wird eine neue zufällige Goody-Position erzeugt. Die Funktion benötigt die nächste Position vom Schlangenkopf als 'snakepart' Datentyp.
+Die `eat()`-Funktion überprüft, ob der Schlangenkopf sich auf das Goody bewegt, wenn ja, erhöht die Funktion die Schlangenlänge um eins und den Score um 10 Punkte. Danach wird eine neue zufällige Goody-Position erzeugt. Die Funktion benötigt die nächste Position vom Schlangenkopf als `snakepart` Datentyp.
 ```c
 void eat(snakepart next);
 ```
 
 ***Überprüfung des nächsten Schritts*** <br/>
-Ob die Schlange im nächsten Schritt ein Hindernis oder sich selbst berührt, wird durch die Funktion 'checkNextStep()' überprüft. Dazu wird die nächste Position des Schlangenkopfs der Funktion übergeben. Die Funktion vergleicht diese Position anschließend mit dem 'Snake[]'-Array und den Spielfeldbegrenzungen.
+Ob die Schlange im nächsten Schritt ein Hindernis oder sich selbst berührt, wird durch die Funktion `checkNextStep()` überprüft. Dazu wird die nächste Position des Schlangenkopfs der Funktion übergeben. Die Funktion vergleicht diese Position anschließend mit dem `Snake[]`-Array und den Spielfeldbegrenzungen.
 ```c
  boolean checkNextStep(snakepart next); 
  
   //false : Hindernis wird berührt 
   //true : Hindernis wird nicht berührt	
 ```
-Der Rückgabewert der Funktion liefert dann, ob ein Hindernis im nächsten Schritt berührt wird mit 'false' oder ob kein Hindernis berührt wird mit 'true'.
+Der Rückgabewert der Funktion liefert dann, ob ein Hindernis im nächsten Schritt berührt wird mit `false` oder ob kein Hindernis berührt wird mit `true`.
 
 ***Bewegung der Schlange*** <br/>
 Damit die Schlange sich auf eine neue Position verschiebt, muss die Funktion `move()` aufgerufen werden. Die Funktion schiebt dabei die Positionen im `Snake[]`-Array um eine Position nach hinten. Das letzte Element bei `s_length-1` wird dabei nicht berücksichtigt, da dieses im nächsten Zug nicht mehr Teil der Schlange ist. Wird die Schlangenlänge `s_length` größer, so müssen immer mehr Elemente verschoben werden. Zuletzt, muss die neue X- und Y-Position des Schlangenkopfes in das 0. Element des `Snake[]`-Arrays geschrieben werden.
@@ -175,7 +175,7 @@ Regelt den kompletten Spielverlauf, siehe Struktogramm.
 void game(); 
 ``` 
 
-<img align="center" width="800" height="600" src="https://abload.de/img/struktogramm-spiel-snz0jum.png"> 
+[![Bild struktogramm-zu-gamexcj9u.png auf abload.de](https://abload.de/img/struktogramm-zu-gamexcj9u.png)](https://abload.de/image.php?img=struktogramm-zu-gamexcj9u.png)
 
    ### Visualisierung
    

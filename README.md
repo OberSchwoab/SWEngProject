@@ -37,12 +37,12 @@ Das komplette Spiel soll in C geschrieben und in der Windows Konsole ausführbar
   Lukas Sellmaier
   
   ### 🎮Spielmechanik 
-   ##### wird Programmiert und Entwickelt von Tim Gebhard
-   
-Das Modul der Spielsteuerung steuert den Programmablauf sowie die Spielmechanik.
+   ##### wird Programmiert und Entwickelt von `Tim Gebhard`
+
+Im Modul der Spielsteuerung wird die Spielmechanik, also die Spiellogik und der Programmablauf gesteuert. Die nachfolgenden Punkte gehen darauf näher ein.		
 
 * Programmablauf: 
-Nach Start des Spiels soll zu Beginn die Bestenliste angezeigt werden. Der Benutzer soll dann aufgefordert werden eine Eingabe zu seinem gewünschten Spielername zu                    machen. Nach Bestätigen der Eingabe soll das Spiel gestartet werden. D. h. das Spielfeld soll erscheinen und die Schlange sollte anfangen sich mit einer bestimmten                    Geschwindigkeit zu bewegen. Berührt die Schlange sich selbst oder eine der vier Rändern, wird das Spiel beendet. Der Benutzter soll anschließend eine Ausgabe zusehen                  bekommen, in     der er nochmals sein erreichten Punktestand sehen kann. Danach wird die abgespeicherte Bestenliste angezeigt und der Benutzer wird gefragt, ob er nochmals         spielen möchte.
+Programmablauf: Nach Start des Spiels soll zu Beginn der Startbildschirm angezeigt werden. Der Benutzer soll dann aufgefordert werden eine Eingabe zu seinem gewünschten Spielernamen zu machen. Nach Bestätigen der Eingabe soll das Spiel gestartet werden. D. h. das Spielfeld soll erscheinen und die Schlange sollte anfangen sich mit einer bestimmten Geschwindigkeit zu bewegen. Das Spiel wird so lange gespielt bis die Schlange sich selbst oder eine der vier Ränder berührt. Nachdem das Spiel beendet wurde, soll der Benutzter eine Ausgabe zusehen bekommen, in der er nochmals sein erreichter Punktestand sehen kann. Die abgespeicherte Bestenliste wird angezeigt und der Benutzer wird gefragt, ob er nochmals spielen möchte. Wenn dieser nochmal spielen möchte, wird das Spiel neu gestartet.
 
 * Spielmechanik:
 Während dem Spiel verarbeitet die Spielsteuerung die Eingabe des Benutzers, sodass die Schlangen auf dem Spielfeld in die gewünschte Richtung gesteuert werden kann. Dabei sollen  die einzelnen Elemente (Körperteile) der Schlange den vorherigen Elementen folgen, wie in einer Kette. Der Schlangenkopf gibt hierbei die Richtung der kompletten Schlangen vor.    Während des Spiels wird auch überprüft, ob der Schlangenkopf ein Teil der Schlange oder die Spielbegrenzung berührt.
@@ -65,13 +65,13 @@ Fährt die Schlange über einen durch die Spielmechanik zufällig auf dem Spielf
   
    ### Spielmechanik
   
-* **Globale Variablen:**
+* **Globale Variablen der Spielsteuerung:**
 
 Jedes Element der Schlange besitzt eine Position auf dem Spielfeld, diese wird im  `Snake ` Array vom Typ  `snakepart ` gespeichert. Das erste Element des Arrays ist der Schlangenkopf, die anderen Gliedmaßen folgen im Array danach.
 ```c
-snakepart snake[10];
+snakepart snake[100];
 ```
-Zur einfacheren Umsetzung wird am Anfang der Entwicklungsphase das Snake Array auf 10 Elemente beschränkt. Im Verlauf der Entwicklung wird hierbei jedoch   die `malloc()` Funktion hinzugefügt.
+Zur einfacheren Umsetzung wird am Anfang der Entwicklungsphase das Snake Array auf 100 Elemente beschränkt.
 
 Die Schlangenteile vom Typ  `snakepart` bestehen aus der aktuellen X- und Y-Position und werden durch einen typedef als neuen Typen definiert.
 ```c
@@ -80,47 +80,48 @@ Die Schlangenteile vom Typ  `snakepart` bestehen aus der aktuellen X- und Y-Posi
       		int pos_Y;//Y-Position
     	 }snakepart;
 ```
-Des Weiteren wird die Länge der Schlange in einer Globalen Variable gespeichert.
+Des Weiteren wird die Länge der Schlange in einer globalen Variable gespeichert. Die Variable wird benötigt, um die Anzahl der gültigen Elemente im 'Snake[]'Array um eins zu erweitern, d.h. wenn ein neues Element der Schlange hinzugefügt werden muss, wird das Array um ein Element weiter durchlaufen.
 ```c
      	int s_length = 1;  //Schlangenlänge
 ```      
-Diese ist zu Beginn des Spiels 1 und kann durch aufsammeln von Goodys im Laufe des Spiels erhöht werden. Beim einsammel eines Goodys wird die länge der Schlange durch die nachfolgend beschriebene `eat()` Funktion erhöht.
+Zu Beginn des Spiels wird die Variable auf eins initialisiert und kann durch Aufsammeln von Goodys im Laufe des Spiels erhöht werden. Beim Einsammeln eines Goodys wird die Länge der Schlange durch die nachfolgend beschriebene 'eat()' Funktion erhöht.
 
- Auch der Goody wird auf dem Spielfeld dem Spielfeld angezeigt. Damit er angezeigt und von der Schlange gefressen werden kann wird seine Position benötigt. Diese wird in der Globalen Variable
+Zudem benötigt das Spielfeld auch die Position eines Goodys, damit er von der Schlange gefressen werden. Das Goody ist wieder vom Type `snakepart` und enthält somit X- und Y-Koordinaten. Werden diese Koordinaten von dem Schlangenkopf erreicht, wird dieser von der Schlange gefressen. Folglich wird jetzt eine neue Goody Postion benötigt, die durch die Funktion `randomGoody()` generiert werden. 
 ```c 
     	snakepart Goody;  //Goody Position
 ```      
-Goody vom Typ snakepart gespeichert und wird von der randomGoody() Funktion initialisiert und während der Laufzeit verändert.
+Für den Spieler ist es wichtig möglichst viele Goody mit der Schlange zu fressen. Durch das fressen `eat()` der Goodys wird der Score um 10 Punkte erhöht. 
 ```c
     	int Score = 0;
 ```      
-Die Ganzzahl Variable Score gibt den aktuellen Punktestand wieder. Zu beginn des Spiels wird dieser auf 0 gesetzt. Wird ein Goody eingesammelt wird durch die eat() Funktion der Score um 10 Pkt. erhöht. 
- Zu besseren Verständnis des Steuereingangs wir ein weitere Typ für die Steuerung des Schlangenkopfs definiert.
+Zu Beginn des Spiels wird der Score mit 0 initialisiert, da der Spieler noch keine Punkte erreicht haben kann.
+Zu besseren Verständnis des Steuereingangs wird ein weiterer Typ für die Steuerung des Schlangenkopfs definiert. Dort wurde auch gleich der ASCII-Code der einzelnen Zeichen hinterlegt.
  ```c
-    	typedef enum{
-        	up,  //W oder  ↑
-        	down, //S oder ↓
-        	left, //A oder ←
-       		right //D →
-     	}stearing;
+    	typedef enum {
+    	    up = 119,  //W 
+    	    down = 115, //S 
+    	    left = 97, //A 
+    	    right = 100//D 
+	}stearing;
 ```
-Die Variable laststearing von dem neuen Typ stearing gibt an, welche Taste zu Letzt gedrückt wurde. Diese wird durch das Eingabemodul verändert.
+Um die aktuelle Steuereingabe vom Benutzer erfassen zu können, wurde vom Typ `stearing` eine Variable des letzten Eingangs erzeugt. Diese wird von der Steuerung ständig abgefragt und nur durch das `Eingabemodul` verändert.
 ```c
 	stearing last_stearing;
 ```
-Für den Rückgabewert der checkNextStep-Funktion wird ein Datentyp true oder false definiert. Diese gibt an, ob der nächste Zug zum Spielende oder zum verfahren der Schlange führt.
+Für den Rückgabewert der `checkNextStep()`-Funktion wird ein Datentyp true oder false definiert. Diese gibt an, ob der nächste Zug zum Spielende oder zum Verfahren der Schlange führt.
 ```c
        	typedef enum{
         	false;
        		 true;
-     	}boolean;
+     	}bool;
 ```
-<br><br/>
-*  **Funktionen:**
+---
+*  **Funktionen der Spielsteuerung:**
 
 ***Initialisierung der wichtigesten Variablen*** <br/>
 
-Initialisiert zu beginn jedes Spiels die Variablen `score = 0`, `snake` alle Elemente außer Snake[0] mit NULL, `s_length = 1`, `soody` mit random Position und startet Startfrequenz des Spiels.
+Die 'init()'-Funktion initialisiert zu Beginn jedes Spiels die Variablen 'Score=0', alle Elementer des 'Snake'-Arrays mit NULL und setzt Startposition in 'Snake[0]'. Es wird das 'Goody' mit einer zufälligen Position gefüllt, der Startbildschirm ausgegeben und die Eingabeaufforderung für den Spielernamen ausgeführt. Danach die Initialisierung der Dateiausgabe und des Spielfelds. Schlussendlich dann noch das Spielfeld aktualisiert.
+Die 'init()'-Funktion wird somit vor jedem Spielstart ausgeführt, um die grundlegende Spielumgebung zu schaffen.
 ```c
 void init(); 
 ``` 
@@ -132,7 +133,8 @@ void restart();
 ``` 
 
 ***Neuer Goody*** <br/>
-Erzeugt eine zufällig generierte Position für die Goodys. Überprüft beim erzeugen der Position ob das Feld schon belegt ist, wenn nicht wird die Goody-Position zurückgegeben.
+Erzeugt eine zufällig generierte Position für die Goodys. Damit das Goody nicht in der Schlange generiert wird, wird beim Erzeugen überprüft, ob sich die neue Position schon in einem belegten Feld befindet, ist dies nicht der Fall wird die neue Goody-Position als Rückgabewert zurückgegeben.
+
 ```c
 snakepart randomGoody();
 ``` 

@@ -44,6 +44,9 @@ Im Modul der Spielsteuerung wird die Spielmechanik, also die Spiellogik und der 
 * Programmablauf: 
 Programmablauf: Nach Start des Spiels soll zu Beginn der Startbildschirm angezeigt werden. Der Benutzer soll dann aufgefordert werden eine Eingabe zu seinem gewünschten Spielernamen zu machen. Nach Bestätigen der Eingabe soll das Spiel gestartet werden. D. h. das Spielfeld soll erscheinen und die Schlange sollte anfangen sich mit einer bestimmten Geschwindigkeit zu bewegen. Das Spiel wird so lange gespielt bis die Schlange sich selbst oder eine der vier Ränder berührt. Nachdem das Spiel beendet wurde, soll der Benutzter eine Ausgabe zusehen bekommen, in der er nochmals sein erreichter Punktestand sehen kann. Die abgespeicherte Bestenliste wird angezeigt und der Benutzer wird gefragt, ob er nochmals spielen möchte. Wenn dieser nochmal spielen möchte, wird das Spiel neu gestartet.
 
+[![Bild programmablauf7fk7y.png auf abload.de](https://abload.de/img/programmablauf7fk7y.png)](https://abload.de/image.php?img=programmablauf7fk7y.png)
+
+
 * Spielmechanik:
 Während dem Spiel verarbeitet die Spielsteuerung die Eingabe des Benutzers, sodass die Schlangen auf dem Spielfeld in die gewünschte Richtung gesteuert werden kann. Dabei sollen  die einzelnen Elemente (Körperteile) der Schlange den vorherigen Elementen folgen, wie in einer Kette. Der Schlangenkopf gibt hierbei die Richtung der kompletten Schlangen vor.    Während des Spiels wird auch überprüft, ob der Schlangenkopf ein Teil der Schlange oder die Spielbegrenzung berührt.
 Fährt die Schlange über einen durch die Spielmechanik zufällig auf dem Spielfeld generierten Goody, so wird diese am Kopf um ein weiteres Element (Körperteil) erweitert und der     Punktestand des Spielers wird erhöht.
